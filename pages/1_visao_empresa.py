@@ -237,7 +237,7 @@ with tab2:
 # Visão Geográfica
 with tab3:
     # PRIMEIRO GRÁFICO DA ABA 3
-    st.title('## Country Maps')
+    st.title('Country Maps')
     st.markdown(' ##### Localização central de cada cidade por tipo de tráfego')
     country_maps (df1)
 
