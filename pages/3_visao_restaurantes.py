@@ -295,11 +295,13 @@ with tab1:
 
             with col1:
                 # Gráfico de barras - Distribuição do Tempo por Cidade
+                st.markdown(' ##### Distribuição do Tempo por Cidade')
                 fig = avg_std_time_graph_table (df1, resultado_img=True)
                 st.plotly_chart(fig)
                 
             with col2:
-                # Tabela - Tempo médio e o desvio padrão de entrega por cidade e tipo de pedido
+                # Tabela - Tempo de entrega médio e desvio padrão por cidade e tipo de pedido
+                st.markdown(' ##### Tempo de entrega médio e desvio padrão por cidade e tipo de pedido')
                 fig = avg_std_time_graph_table (df1, resultado_img=False)
                 st.dataframe(fig)
 
@@ -309,10 +311,12 @@ with tab1:
         
         with col1:
             # Gráfico de pizza - Tempo médio de entrega por Cidade
+            st.markdown(' ##### Tempo médio de entrega por Cidade')
             fig = distance(df1,resultado_img=True)
             st.plotly_chart(fig)
 
         with col2:
             # Gráfico de sol - Tempo médio por Tipo de Tráfego
+            st.markdown(' ##### Tempo médio por Tipo de Tráfego')
             fig = avg_std_time_on_traffic (df1)
             st.plotly_chart(fig)
