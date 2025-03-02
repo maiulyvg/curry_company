@@ -111,7 +111,7 @@ def country_maps (df1):
     df_aux = df1.loc[:, ['City', 'Road_traffic_density', 'Delivery_location_latitude', 'Delivery_location_longitude']].groupby(['City', 'Road_traffic_density']).median().reset_index()
     fig = folium.Map()
     for index, location_info in df_aux.iterrows():
-        folium.Marker([location_info['Delivery_location_latitude'], location_info['Delivery_location_longitude']], "x": 0.5, "xanchor": "center", "font": {"size": 16, "family": "Arial", "color": "black"}}, popup=location_info[['City', 'Road_traffic_density']]).add_to(fig)
+        folium.Marker([location_info['Delivery_location_latitude'], location_info['Delivery_location_longitude']], title={"text": "Localização central de cada cidade por tipo de tráfego", "x": 0.5, "xanchor": "center", "font": {"size": 16, "family": "Arial", "color": "black"}}, popup=location_info[['City', 'Road_traffic_density']]).add_to(fig)
     folium_static(fig, width = 1024, height = 600)
     return None
 
