@@ -73,7 +73,6 @@ def order_metric(df1):
     """" Está função tem a responsabilidade de desenhar o gráfico de barras (PRIMEIRO GRÁFICO DA ABA 1)  """
     df_aux = df1.loc[:, ['ID', 'Order_Date']].groupby('Order_Date').count().reset_index()
     fig = px.bar( df_aux, x = 'Order_Date', y = 'ID')
-    fig.update_layout(title={"text": "Visão Empresa - Quantidade de pedidos por dia", "x": 0.5, "xanchor": "center", "font": {"size": 16, "family": "Arial", "color": "black"}})
     return fig
 
 
@@ -83,7 +82,6 @@ def traffic_order_share(df1):
     df_aux['entregas_perc'] = df_aux['ID'] / df_aux['ID'].sum()
     fig = px.pie(df_aux, values= 'entregas_perc', names='Road_traffic_density')
     fig.update_layout(legend_title="Legenda dos Tipos de Tráfego")
-    fig.update_layout(title={"text": "Visão Empresa - Distribuição dos pedidos por tipo de tráfego", "x": 0.5, "xanchor": "center", "font": {"size": 16, "family": "Arial", "color": "black"} })
     return fig
 
 def traffic_order_city (df1):
@@ -91,14 +89,12 @@ def traffic_order_city (df1):
     df_aux = df1.loc[:, ['ID', 'City', 'Road_traffic_density']].groupby( ['City', 'Road_traffic_density']).count().reset_index()
     fig = px.scatter(df_aux, x = 'City', y= 'Road_traffic_density', size= 'ID', color='City')
     fig.update_layout(legend_title="Legenda das modalidades de Cidades")
-    fig.update_layout(title={"text": "Visão Empresa - Comparação do volume de pedidos por cidade e tipo de tráfego", "x": 0.5, "xanchor": "center", "font": {"size": 16, "family": "Arial", "color": "black"}})
     return fig
 
 def order_by_week (df1):
     """" Está função tem a responsabilidade de desenhar o gráfico de linha (PRIMEIRO GRÁFICO DA ABA 2)  """
     df_aux = df1.loc[:, ['ID', 'week_of_year']].groupby('week_of_year').count().reset_index()
     fig = px.line(df_aux, x = 'week_of_year', y = 'ID')
-    fig.update_layout(title={"text": "Visão Empresa - Quantidade de pedidos por semana", "x": 0.5, "xanchor": "center", "font": {"size": 16, "family": "Arial", "color": "black"} })
     return fig
 
 def order_share_by_week (df1):
@@ -108,7 +104,6 @@ def order_share_by_week (df1):
     df_aux = pd.merge(df_aux01, df_aux02, how='inner')
     df_aux['order_by_deliver'] = df_aux['ID']/ df_aux['Delivery_person_ID']
     fig = px.line(df_aux, x = 'week_of_year', y='order_by_deliver')
-    fig.update_layout(title={"text": "Visão Empresa - Quantidade de pedidos por entregador por semana", "x": 0.5, "xanchor": "center", "font": {"size": 16, "family": "Arial", "color": "black"}})
     return fig
 
 def country_maps (df1):
@@ -116,7 +111,7 @@ def country_maps (df1):
     df_aux = df1.loc[:, ['City', 'Road_traffic_density', 'Delivery_location_latitude', 'Delivery_location_longitude']].groupby(['City', 'Road_traffic_density']).median().reset_index()
     fig = folium.Map()
     for index, location_info in df_aux.iterrows():
-        folium.Marker([location_info['Delivery_location_latitude'], location_info['Delivery_location_longitude']], title={"text": "Visão Empresa - Localização central de cada cidade por tipo de tráfego", "x": 0.5, "xanchor": "center", "font": {"size": 16, "family": "Arial", "color": "black"}}, popup=location_info[['City', 'Road_traffic_density']]).add_to(fig)
+        folium.Marker([location_info['Delivery_location_latitude'], location_info['Delivery_location_longitude']], "x": 0.5, "xanchor": "center", "font": {"size": 16, "family": "Arial", "color": "black"}}, popup=location_info[['City', 'Road_traffic_density']]).add_to(fig)
     folium_static(fig, width = 1024, height = 600)
     return None
 
@@ -195,23 +190,25 @@ tab1, tab2, tab3 = st.tabs(['Visão Gerencial', 'Visão Tática', 'Visão Geogr�
 with tab1:
     with st.container():
         # PRIMEIRO GRÁFICO DA ABA 1
+        st.markdown('## Order by Day')
+        st.markdown(' ##### Quantidade de pedidos por dia')
         fig = order_metric(df1)
-        st.markdown('## Orders by Day')
         st.plotly_chart(fig, use_container_width=True)
 
     # Divisão do container em duas partes menores
     with st.container():
+        st.markdown('## Traffic Order')
         col1, col2 = st.columns(2)
         with col1:
             # SEGUNDO GRÁFICO DA ABA 1
+            st.markdown(' ##### Distribuição dos pedidos por tipo de tráfego')
             fig = traffic_order_share(df1)
-            st.markdown('## Traffic Order Share')
             st.plotly_chart(fig, use_container_width=True)
             
         with col2:
             # TERCEIRO GRÁFICO DA ABA 1
+            st.markdown(' ##### Comparação do volume de pedidos por cidade e por tipo de tráfego')
             fig = traffic_order_city(df1)
-            st.markdown('## Traffic order City')
             st.plotly_chart(fig, use_container_width=True)
 
 # ======================================
@@ -220,16 +217,17 @@ with tab1:
 
 # Visão Tática            
 with tab2:
+        st.markdown('## Order by Week')
         with st.container():
             # PRIMEIRO GRÁFICO DA ABA 2
+            st.markdown(' ##### Quantidade de pedidos por semana')
             fig = order_by_week(df1)
-            st.markdown('## Order by Week')
             st.plotly_chart(fig, use_container_width=True)
 
         with st.container():
             # SEGUNDO GRÁFICO DA ABA 2
+            st.markdown(' ##### Quantidade de pedidos por entregador por semana')
             fig = order_share_by_week (df1)
-            st.markdown('## Order Share by Week')
             st.plotly_chart(fig, use_container_width=True)
 
 # ======================================
@@ -240,5 +238,6 @@ with tab2:
 with tab3:
     # PRIMEIRO GRÁFICO DA ABA 3
     st.markdown('## Country Maps')
+    st.markdown(' ##### Localização central de cada cidade por tipo de tráfego')
     country_maps (df1)
 
