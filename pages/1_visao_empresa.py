@@ -190,14 +190,14 @@ tab1, tab2, tab3 = st.tabs(['Visão Gerencial', 'Visão Tática', 'Visão Geogr�
 with tab1:
     with st.container():
         # PRIMEIRO GRÁFICO DA ABA 1
-        st.markdown('## Order by Day')
+        st.title('Order by Day')
         st.markdown(' ##### Quantidade de pedidos por dia')
         fig = order_metric(df1)
         st.plotly_chart(fig, use_container_width=True)
 
     # Divisão do container em duas partes menores
     with st.container():
-        st.markdown('## Traffic Order')
+        st.title('Traffic Order')
         col1, col2 = st.columns(2)
         with col1:
             # SEGUNDO GRÁFICO DA ABA 1
@@ -217,7 +217,7 @@ with tab1:
 
 # Visão Tática            
 with tab2:
-        st.markdown('## Order by Week')
+        st.title('Order by Week')
         with st.container():
             # PRIMEIRO GRÁFICO DA ABA 2
             st.markdown(' ##### Quantidade de pedidos por semana')
@@ -237,7 +237,7 @@ with tab2:
 # Visão Geográfica
 with tab3:
     # PRIMEIRO GRÁFICO DA ABA 3
-    st.markdown('## Country Maps')
+    st.title('## Country Maps')
     st.markdown(' ##### Localização central de cada cidade por tipo de tráfego')
     country_maps (df1)
 
